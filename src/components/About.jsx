@@ -47,21 +47,21 @@ export default function About() {
   ];
 
   return (
-    <section id="about" className="relative pt-32 pb-20 md:pt-40 md:pb-28 bg-[#FAFAFD] overflow-hidden">
+    <section id="about" className="relative pt-24 sm:pt-28 md:pt-40 pb-16 md:pb-28 bg-[#FAFAFD] overflow-hidden">
       {/* Background Soft Gradient Aura Spotlights */}
       <div className="absolute top-20 left-1/2 -translate-x-1/2 w-[700px] h-[500px] bg-gradient-to-tr from-indigo-500/10 via-rose-500/5 to-cyan-500/10 rounded-full blur-[140px] pointer-events-none -z-10" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* HERO INTRO BLOCK WITH STAGGERED MOTION */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-12 items-center mb-24">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center mb-16 sm:mb-24">
           
           {/* Left Column: Greeting & Headline */}
           <motion.div
             variants={containerVariants}
             initial="hidden"
             animate="visible"
-            className="lg:col-span-7 space-y-6 text-center lg:text-left"
+            className="lg:col-span-7 space-y-4 sm:space-y-6 text-center lg:text-left"
           >
             {/* Status Pill */}
             <motion.div variants={itemVariants} className="inline-block">
@@ -73,27 +73,27 @@ export default function About() {
 
             {/* Main Headline */}
             <motion.div variants={itemVariants} className="space-y-2">
-              <h1 className="text-4xl sm:text-6xl xl:text-7xl font-display font-extrabold text-slate-900 tracking-tight leading-[1.1]">
+              <h1 className="text-3xl sm:text-5xl md:text-6xl xl:text-7xl font-display font-extrabold text-slate-900 tracking-tight leading-[1.15] sm:leading-[1.1]">
                 {artistBio.name}
               </h1>
               
-              <div className="text-xl sm:text-3xl font-display font-bold text-indigo-600 flex items-center justify-center lg:justify-start gap-2">
+              <div className="text-lg sm:text-2xl md:text-3xl font-display font-bold text-indigo-600 flex items-center justify-center lg:justify-start gap-2">
                 <h2>{artistBio.title}</h2>
               </div>
             </motion.div>
 
             {/* Tagline / Short Intro */}
-            <motion.p variants={itemVariants} className="text-slate-600 text-base sm:text-lg max-w-2xl mx-auto lg:mx-0 font-normal leading-relaxed">
+            <motion.p variants={itemVariants} className="text-slate-600 text-sm sm:text-base md:text-lg max-w-2xl mx-auto lg:mx-0 font-normal leading-relaxed">
               {artistBio.tagline} Welcome to my digital artwork archive featuring character illustrations, concept paintings, and custom commission work.
             </motion.p>
 
             {/* Action Buttons */}
-            <motion.div variants={itemVariants} className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-3">
+            <motion.div variants={itemVariants} className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center lg:justify-start gap-3 sm:gap-4 pt-2">
               <motion.button
                 whileHover={{ scale: 1.04, y: -2 }}
                 whileTap={{ scale: 0.96 }}
                 onClick={() => handleScrollTo('gallery')}
-                className="btn-primary px-7 py-3.5 w-full sm:w-auto font-display font-semibold text-sm flex items-center justify-center gap-2.5"
+                className="btn-primary px-6 sm:px-7 py-3 sm:py-3.5 w-full sm:w-auto font-display font-semibold text-xs sm:text-sm flex items-center justify-center gap-2.5 touch-manipulation shadow-md"
               >
                 <ImageIcon className="w-4 h-4" />
                 <span>ดูผลงาน (View Gallery)</span>
@@ -103,7 +103,7 @@ export default function About() {
                 whileHover={{ scale: 1.04, y: -2 }}
                 whileTap={{ scale: 0.96 }}
                 onClick={() => handleScrollTo('commissions')}
-                className="btn-secondary px-7 py-3.5 w-full sm:w-auto font-display font-semibold text-sm flex items-center justify-center gap-2.5"
+                className="btn-secondary px-6 sm:px-7 py-3 sm:py-3.5 w-full sm:w-auto font-display font-semibold text-xs sm:text-sm flex items-center justify-center gap-2.5 touch-manipulation"
               >
                 <Sparkles className="w-4 h-4 text-indigo-600" />
                 <span>สั่งทำ Commission</span>
@@ -124,21 +124,21 @@ export default function About() {
               className="relative mx-auto max-w-md lg:max-w-none artwork-glow cursor-pointer"
               onClick={() => handleScrollTo('gallery')}
             >
-              <div className="relative rounded-3xl overflow-hidden bg-white border border-slate-200/80 shadow-2xl shadow-indigo-500/10 p-2.5">
-                <div className="rounded-2xl overflow-hidden border border-slate-100">
+              <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden bg-white border border-slate-200/80 shadow-2xl shadow-indigo-500/10 p-2 sm:p-2.5">
+                <div className="rounded-xl sm:rounded-2xl overflow-hidden border border-slate-100">
                   <img
                     src="/assets/artworks/art-57.png"
                     alt="Featured Artwork by Chatchanok Makmool"
-                    className="w-full h-[420px] sm:h-[500px] object-cover object-center"
+                    className="w-full h-[320px] sm:h-[420px] lg:h-[500px] object-cover object-center"
                   />
                 </div>
 
-                <div className="mt-3 p-3.5 rounded-xl bg-slate-50 border border-slate-200/60 flex items-center justify-between">
+                <div className="mt-2.5 sm:mt-3 p-3 sm:p-3.5 rounded-xl bg-slate-50 border border-slate-200/60 flex items-center justify-between">
                   <div>
                     <span className="text-[10px] uppercase font-display font-bold tracking-widest text-indigo-600 block">Featured Piece</span>
-                    <h3 className="text-base font-display font-bold text-slate-900">Celestial Harmony</h3>
+                    <h3 className="text-sm sm:text-base font-display font-bold text-slate-900">Celestial Harmony</h3>
                   </div>
-                  <span className="px-3 py-1 rounded-full bg-white text-indigo-600 border border-slate-200 text-xs font-mono font-semibold shadow-sm">2026</span>
+                  <span className="px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full bg-white text-indigo-600 border border-slate-200 text-xs font-mono font-semibold shadow-xs">2026</span>
                 </div>
               </div>
             </motion.div>
@@ -147,8 +147,8 @@ export default function About() {
         </div>
 
         {/* INTEGRATED BIO STORY & ARTIST BACKGROUND */}
-        <div className="pt-20 border-t border-slate-200/80">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        <div className="pt-12 sm:pt-20 border-t border-slate-200/80">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
             
             {/* Left Column: Studio Portrait Card */}
             <motion.div
@@ -160,20 +160,20 @@ export default function About() {
             >
               <motion.div
                 whileHover={{ y: -6 }}
-                className="anime-card p-3 bg-white"
+                className="anime-card p-2.5 sm:p-3 bg-white"
               >
-                <div className="relative rounded-2xl overflow-hidden border border-slate-100">
+                <div className="relative rounded-xl sm:rounded-2xl overflow-hidden border border-slate-100">
                   <img
                     src={artistBio.portraitImage}
                     alt="Chatchanok Makmool Artist Portrait"
-                    className="w-full h-[360px] sm:h-[420px] object-cover object-center"
+                    className="w-full h-[280px] sm:h-[360px] lg:h-[420px] object-cover object-center"
                   />
-                  <div className="p-4 bg-white/95 backdrop-blur-md border-t border-slate-100 flex items-center justify-between">
+                  <div className="p-3.5 sm:p-4 bg-white/95 backdrop-blur-md border-t border-slate-100 flex items-center justify-between">
                     <div>
-                      <h4 className="text-base font-display font-bold text-slate-900">{artistBio.name}</h4>
+                      <h4 className="text-sm sm:text-base font-display font-bold text-slate-900">{artistBio.name}</h4>
                       <p className="text-xs text-indigo-600 font-medium">{artistBio.title}</p>
                     </div>
-                    <span className="px-3 py-1 rounded-full bg-indigo-50 text-indigo-700 text-xs font-display font-semibold">
+                    <span className="px-2.5 py-1 sm:px-3 sm:py-1 rounded-full bg-indigo-50 text-indigo-700 text-[11px] sm:text-xs font-display font-semibold">
                       Digital Artist
                     </span>
                   </div>

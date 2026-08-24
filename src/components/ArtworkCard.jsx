@@ -11,9 +11,10 @@ export default function ArtworkCard({ artwork, index, onSelect }) {
       animate={{ opacity: 1, y: 0, scale: 1 }}
       exit={{ opacity: 0, scale: 0.9 }}
       whileHover={{ y: -6, scale: 1.02 }}
+      whileTap={{ scale: 0.98 }}
       transition={{ type: 'spring', stiffness: 300, damping: 20, delay: index * 0.05 }}
       onClick={() => onSelect(artwork)}
-      className={`group relative rounded-2xl overflow-hidden cursor-pointer bg-white border border-slate-200/80 shadow-md shadow-indigo-500/5 hover:shadow-xl hover:shadow-indigo-500/15 hover:border-indigo-500/30 transition-shadow duration-300 flex flex-col justify-between ${
+      className={`group relative rounded-2xl overflow-hidden cursor-pointer bg-white border border-slate-200/80 shadow-md shadow-indigo-500/5 hover:shadow-xl hover:shadow-indigo-500/15 hover:border-indigo-500/30 transition-all duration-300 flex flex-col justify-between touch-manipulation ${
         isLandscape ? 'sm:col-span-2' : 'col-span-1'
       }`}
       tabIndex={0}
@@ -38,7 +39,7 @@ export default function ArtworkCard({ artwork, index, onSelect }) {
         />
 
         {/* Hover Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-900/75 via-slate-900/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-5">
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-900/75 via-slate-900/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-3.5 sm:p-5">
           <div className="transform translate-y-3 group-hover:translate-y-0 transition-transform duration-300 flex items-center justify-between">
             <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-display font-semibold bg-white/90 text-slate-900 backdrop-blur-sm shadow-md">
               <Tag className="w-3 h-3 text-indigo-600" />
@@ -57,14 +58,14 @@ export default function ArtworkCard({ artwork, index, onSelect }) {
       </div>
 
       {/* Info Bar */}
-      <div className="p-5 bg-white space-y-1.5">
+      <div className="p-4 sm:p-5 bg-white space-y-1 sm:space-y-1.5">
         <div className="flex items-center justify-between">
-          <span className="text-xs font-display font-semibold text-indigo-600">
+          <span className="text-[11px] sm:text-xs font-display font-semibold text-indigo-600">
             {artwork.category}
           </span>
         </div>
 
-        <h3 className="text-lg font-display font-bold text-slate-900 group-hover:text-indigo-600 transition-colors leading-tight">
+        <h3 className="text-base sm:text-lg font-display font-bold text-slate-900 group-hover:text-indigo-600 transition-colors leading-tight">
           {artwork.title}
         </h3>
 
