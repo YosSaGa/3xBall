@@ -4,11 +4,12 @@
   html {
     -webkit-tap-highlight-color: transparent;
     text-size-adjust: 100%;
+    scroll-behavior: smooth;
   }
   body {
     font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    background-color: #FAFAFD;
-    color: #0F172A;
+    background-color: #090A10;
+    color: #F1F5F9;
     overflow-x: hidden;
     touch-action: manipulation;
   }
@@ -18,82 +19,153 @@
   font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
-/* Custom Scrollbar */
+/* Studio Custom Dark Scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #FAFAFD;
+  background: #090A10;
 }
 ::-webkit-scrollbar-thumb {
-  background: #CBD5E1;
+  background: #1E2238;
   border-radius: 9999px;
+  border: 2px solid #090A10;
 }
 ::-webkit-scrollbar-thumb:hover {
   background: #6366F1;
 }
 
-/* Glass & Card Styling */
-.anime-card {
-  background: #FFFFFF;
-  border: 1px solid rgba(226, 232, 240, 0.8);
-  border-radius: 1.5rem;
-  box-shadow: 0 10px 30px -10px rgba(99, 102, 241, 0.06), 0 4px 6px -4px rgba(0, 0, 0, 0.03);
+/* Glassmorphism & Studio Panels */
+.glass-panel {
+  background: rgba(18, 21, 38, 0.65);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.08);
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.anime-card:hover {
-  transform: translateY(-4px);
-  border-color: rgba(99, 102, 241, 0.3);
-  box-shadow: 0 20px 40px -15px rgba(99, 102, 241, 0.12);
+.glass-panel:hover {
+  border-color: rgba(99, 102, 241, 0.35);
+  box-shadow: 0 25px 60px rgba(99, 102, 241, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.12);
 }
 
-/* Signature Artwork Aura Glow */
+/* Studio Anime & Concept Artwork Card */
+.studio-card {
+  background: linear-gradient(180deg, rgba(26, 31, 56, 0.7) 0%, rgba(15, 18, 33, 0.85) 100%);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 1.5rem;
+  box-shadow: 0 12px 36px -10px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.03);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.studio-card:hover {
+  border-color: rgba(129, 140, 248, 0.45);
+  box-shadow: 0 20px 50px -10px rgba(99, 102, 241, 0.25), 0 0 30px rgba(99, 102, 241, 0.15);
+}
+
+/* Signature Ambient Glow & Beam Effects */
 .artwork-glow {
   position: relative;
 }
 .artwork-glow::before {
   content: '';
   position: absolute;
-  inset: -12px;
-  background: linear-gradient(135deg, rgba(99, 102, 241, 0.25), rgba(244, 63, 94, 0.2), rgba(6, 182, 212, 0.25));
+  inset: -14px;
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.35), rgba(236, 72, 153, 0.25), rgba(6, 182, 212, 0.3));
   border-radius: 2rem;
-  filter: blur(24px);
+  filter: blur(28px);
   z-index: -1;
-  opacity: 0.7;
-  transition: opacity 0.4s ease;
+  opacity: 0.6;
+  transition: opacity 0.5s ease;
 }
 .artwork-glow:hover::before {
-  opacity: 1;
+  opacity: 0.95;
+  filter: blur(34px);
 }
 
-/* Confident & Crisp Action Button */
+/* High-Impact Recruiter Action Buttons */
 .btn-primary {
-  background: linear-gradient(135deg, #4F46E5, #6366F1);
+  position: relative;
+  background: linear-gradient(135deg, #4F46E5 0%, #6366F1 50%, #8B5CF6 100%);
   color: #FFFFFF;
   border-radius: 1rem;
-  box-shadow: 0 4px 14px 0 rgba(79, 70, 229, 0.3);
+  box-shadow: 0 4px 20px rgba(79, 70, 229, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2);
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
 }
 .btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 20px 0 rgba(79, 70, 229, 0.4);
+  box-shadow: 0 8px 30px rgba(99, 102, 241, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.3);
 }
 .btn-primary:active {
   transform: translateY(0);
 }
 
 .btn-secondary {
-  background: #FFFFFF;
-  color: #0F172A;
-  border: 1px solid #E2E8F0;
+  position: relative;
+  background: rgba(255, 255, 255, 0.05);
+  color: #F8FAFC;
+  border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 1rem;
-  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.04);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .btn-secondary:hover {
   transform: translateY(-2px);
-  border-color: #6366F1;
-  color: #4F46E5;
-  box-shadow: 0 6px 16px 0 rgba(99, 102, 241, 0.12);
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(129, 140, 248, 0.45);
+  color: #FFFFFF;
+  box-shadow: 0 8px 24px rgba(99, 102, 241, 0.2);
+}
+.btn-secondary:active {
+  transform: translateY(0);
+}
+
+/* Shimmer Button Sweep Animation */
+.shimmer-effect {
+  position: relative;
+  overflow: hidden;
+}
+.shimmer-effect::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    60deg,
+    transparent 20%,
+    rgba(255, 255, 255, 0.18) 50%,
+    transparent 80%
+  );
+  transform: rotate(30deg) translateY(-100%);
+  transition: transform 0.75s ease-in-out;
+}
+.shimmer-effect:hover::after {
+  transform: rotate(30deg) translateY(100%);
+}
+
+/* Radial Spotlights and Mesh Backgrounds */
+.studio-mesh {
+  background-image: 
+    radial-gradient(at 10% 20%, rgba(99, 102, 241, 0.12) 0px, transparent 50%),
+    radial-gradient(at 90% 10%, rgba(236, 72, 153, 0.08) 0px, transparent 45%),
+    radial-gradient(at 50% 80%, rgba(6, 182, 212, 0.08) 0px, transparent 50%),
+    radial-gradient(at 80% 85%, rgba(139, 92, 246, 0.1) 0px, transparent 40%);
+}
+
+/* Print Optimization for Recruiter Resume */
+@media print {
+  body {
+    background: #FFFFFF !important;
+    color: #0F172A !important;
+  }
+  header, footer, nav, .no-print {
+    display: none !important;
+  }
 }

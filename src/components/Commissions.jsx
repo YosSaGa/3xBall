@@ -1,14 +1,14 @@
 import { motion } from 'framer-motion';
-import { Sparkles, Check, ArrowRight } from 'lucide-react';
-import { commissionCategories, commissionSteps } from '../data/artworks';
+import { Sparkles, Check, ArrowRight, Layers, Palette, ShieldCheck } from 'lucide-react';
+import { skillsCategories, skillProcess } from '../data/artworks';
 
 export default function Commissions() {
-  const handleRequestClick = (categoryTitle) => {
-    const contactSection = document.getElementById('contact');
-    if (contactSection) {
+  const handleViewGallery = () => {
+    const gallerySection = document.getElementById('gallery');
+    if (gallerySection) {
       const offset = 80;
       const bodyRect = document.body.getBoundingClientRect().top;
-      const elementRect = contactSection.getBoundingClientRect().top;
+      const elementRect = gallerySection.getBoundingClientRect().top;
       const elementPosition = elementRect - bodyRect;
       const offsetPosition = elementPosition - offset;
 
@@ -16,16 +16,21 @@ export default function Commissions() {
         top: offsetPosition,
         behavior: 'smooth'
       });
+    }
+  };
 
-      const selectElement = document.getElementById('commission-type-select');
-      if (selectElement) {
-        selectElement.value = categoryTitle;
-      }
+  const getSkillIcon = (iconName) => {
+    switch (iconName) {
+      case 'Layers': return Layers;
+      case 'Palette': return Palette;
+      case 'Sparkles': return Sparkles;
+      case 'ShieldCheck': return ShieldCheck;
+      default: return Sparkles;
     }
   };
 
   return (
-    <section id="commissions" className="relative py-24 bg-[#FAFAFD] overflow-hidden border-t border-slate-200/60">
+    <section id="skills" className="relative py-24 bg-[#FAFAFD] overflow-hidden border-t border-slate-200/60">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
@@ -38,7 +43,7 @@ export default function Commissions() {
             className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-indigo-50 border border-indigo-200/60 text-indigo-700 font-display font-semibold text-xs uppercase tracking-wider"
           >
             <Sparkles className="w-3.5 h-3.5 text-indigo-600" />
-            <span>Commission Services</span>
+            <span>ทักษะและความถนัด — Skills & Capabilities</span>
           </motion.div>
 
           <motion.h2
@@ -48,7 +53,7 @@ export default function Commissions() {
             transition={{ duration: 0.6, delay: 0.1 }}
             className="text-3xl sm:text-5xl font-display font-bold text-slate-900 tracking-tight"
           >
-            Commission Me
+            ทักษะและความเชี่ยวชาญ
           </motion.h2>
 
           <motion.p
@@ -58,81 +63,71 @@ export default function Commissions() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-slate-600 text-base sm:text-lg font-normal leading-relaxed"
           >
-            I accept custom artwork inquiries for character designs, portraits, fan art, and full keyframe illustrations. Select a tier below to get started.
+            สรุปความถนัดด้านการออกแบบตัวละคร, คีย์เฟรมฉากสภาพแวดล้อม, ทฤษฎีการจัดแสง และกระบวนการผลิตงานภาพดิจิทัล
           </motion.p>
         </div>
 
         {/* Categories Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 mb-20">
-          {commissionCategories.map((cat, idx) => (
-            <motion.div
-              key={cat.id}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              whileHover={{ y: -6 }}
-              transition={{ duration: 0.5, delay: idx * 0.1 }}
-              className="anime-card p-6 bg-white flex flex-col justify-between"
-            >
-              <div className="space-y-4">
-                {/* Badge & Tier */}
-                <div className="flex items-center justify-between">
-                  <span className="text-xs font-display font-semibold px-3 py-1 rounded-full bg-indigo-50 text-indigo-600 border border-indigo-200/60">
-                    {cat.badge}
-                  </span>
-                  <span className="text-xs font-mono font-medium text-slate-400">Tier 0{idx + 1}</span>
-                </div>
-
-                {/* Title */}
-                <h3 className="text-xl font-display font-bold text-slate-900">
-                  {cat.title}
-                </h3>
-
-                {/* Price Display */}
-                <div className="py-2.5 px-3.5 rounded-xl bg-slate-50 border border-slate-200/60 space-y-0.5">
-                  <div className="flex items-baseline gap-1.5">
-                    <span className="text-2xl font-display font-extrabold text-slate-900">
-                      {cat.startingPrice}
+          {skillsCategories.map((cat, idx) => {
+            const IconComp = getSkillIcon(cat.icon);
+            return (
+              <motion.div
+                key={cat.id}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                whileHover={{ y: -6 }}
+                transition={{ duration: 0.5, delay: idx * 0.1 }}
+                className="anime-card p-6 bg-white flex flex-col justify-between"
+              >
+                <div className="space-y-4">
+                  {/* Badge & Icon */}
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-display font-semibold px-3 py-1 rounded-full bg-indigo-50 text-indigo-600 border border-indigo-200/60">
+                      {cat.badge}
                     </span>
-                    <span className="text-xs font-medium text-slate-500">starting price</span>
+                    <div className="w-8 h-8 rounded-lg bg-slate-100 text-indigo-600 flex items-center justify-center">
+                      <IconComp className="w-4 h-4" />
+                    </div>
                   </div>
-                  {cat.isPlaceholder && (
-                    <p className="text-[11px] font-mono text-indigo-600/80 italic">
-                      *Editable placeholder price
-                    </p>
-                  )}
+
+                  {/* Title */}
+                  <h3 className="text-xl font-display font-bold text-slate-900">
+                    {cat.title}
+                  </h3>
+
+                  {/* Description */}
+                  <p className="text-xs text-slate-600 font-normal leading-relaxed">
+                    {cat.description}
+                  </p>
+
+                  {/* Feature List */}
+                  <ul className="space-y-2 pt-2 border-t border-slate-100">
+                    {cat.features.map((feat, fIdx) => (
+                      <li key={fIdx} className="flex items-center gap-2 text-xs text-slate-700 font-medium">
+                        <Check className="w-3.5 h-3.5 text-indigo-600 flex-shrink-0" />
+                        <span>{feat}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
 
-                {/* Description */}
-                <p className="text-xs text-slate-600 font-normal leading-relaxed">
-                  {cat.description}
-                </p>
-
-                {/* Feature List */}
-                <ul className="space-y-2 pt-2 border-t border-slate-100">
-                  {cat.features.map((feat, fIdx) => (
-                    <li key={fIdx} className="flex items-center gap-2 text-xs text-slate-700 font-medium">
-                      <Check className="w-3.5 h-3.5 text-indigo-600 flex-shrink-0" />
-                      <span>{feat}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              {/* Action Button */}
-              <div className="pt-6">
-                <motion.button
-                  whileHover={{ scale: 1.03 }}
-                  whileTap={{ scale: 0.97 }}
-                  onClick={() => handleRequestClick(cat.title)}
-                  className="btn-primary w-full py-3 px-4 text-xs font-display font-semibold flex items-center justify-center gap-2"
-                >
-                  <span>Request Commission</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </motion.button>
-              </div>
-            </motion.div>
-          ))}
+                {/* Action Button */}
+                <div className="pt-6">
+                  <motion.button
+                    whileHover={{ scale: 1.03 }}
+                    whileTap={{ scale: 0.97 }}
+                    onClick={handleViewGallery}
+                    className="btn-primary w-full py-3 px-4 text-xs font-display font-semibold flex items-center justify-center gap-2"
+                  >
+                    <span>ดูผลงานที่เกี่ยวข้อง</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </motion.button>
+                </div>
+              </motion.div>
+            );
+          })}
         </div>
 
         {/* 4-Step Process Section */}
@@ -140,15 +135,15 @@ export default function Commissions() {
           <div className="text-center max-w-2xl mx-auto space-y-2 mb-12">
             <span className="text-xs font-display font-semibold text-indigo-600 uppercase tracking-wider">Workflow Milestone</span>
             <h3 className="text-2xl sm:text-3xl font-display font-bold text-slate-900">
-              4-Step Commission Process
+              กระบวนการทำงาน (Creative Process)
             </h3>
             <p className="text-slate-600 text-sm font-normal">
-              Structured progress milestones ensuring your concept moves seamlessly from draft sketch to final art.
+              ขั้นตอนการทำงานอย่างเป็นระบบตั้งแต่การวางไอเดียจนถึงภาพสำเร็จสมบูรณ์
             </p>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {commissionSteps.map((step, idx) => (
+            {skillProcess.map((step, idx) => (
               <motion.div
                 key={step.step}
                 initial={{ opacity: 0, y: 20 }}

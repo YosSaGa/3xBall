@@ -102,11 +102,11 @@ export default function About() {
               <motion.button
                 whileHover={{ scale: 1.04, y: -2 }}
                 whileTap={{ scale: 0.96 }}
-                onClick={() => handleScrollTo('commissions')}
+                onClick={() => handleScrollTo('skills')}
                 className="btn-secondary px-6 sm:px-7 py-3 sm:py-3.5 w-full sm:w-auto font-display font-semibold text-xs sm:text-sm flex items-center justify-center gap-2.5 touch-manipulation"
               >
                 <Sparkles className="w-4 h-4 text-indigo-600" />
-                <span>สั่งทำ Commission</span>
+                <span>ทักษะและความถนัด (Skills)</span>
               </motion.button>
             </motion.div>
           </motion.div>

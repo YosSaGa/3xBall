@@ -27,7 +27,7 @@ export default function Contact() {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    commissionType: 'Character Illustration',
+    inquiryType: 'พูดคุยโปรเจกต์งานวาด (Project Discussion)',
     message: ''
   });
   const [submitted, setSubmitted] = useState(false);
@@ -38,7 +38,7 @@ export default function Contact() {
     setSubmitted(true);
     setTimeout(() => {
       setSubmitted(false);
-      setFormData({ name: '', email: '', commissionType: 'Character Illustration', message: '' });
+      setFormData({ name: '', email: '', inquiryType: 'พูดคุยโปรเจกต์งานวาด (Project Discussion)', message: '' });
     }, 4000);
   };
 
@@ -89,7 +89,7 @@ export default function Contact() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-slate-600 text-base sm:text-lg font-normal leading-relaxed"
           >
-            Send a commission inquiry or connect via social channels below. All social handles are customizable placeholders.
+            ส่งข้อความพูดคุยเกี่ยวกับโปรเจกต์งานวาด สอบถามข้อมูล หรือติดต่อผ่านช่องทางโซเชียลมีเดียได้เลยครับ
           </motion.p>
         </div>
 
@@ -104,8 +104,8 @@ export default function Contact() {
             className="lg:col-span-5 space-y-6"
           >
             <div className="space-y-2">
-              <h3 className="text-xl font-display font-bold text-slate-900">Social Channels</h3>
-              <p className="text-xs text-slate-500 font-normal">Click any channel below to copy the handle to clipboard.</p>
+              <h3 className="text-xl font-display font-bold text-slate-900">ช่องทางติดต่อโซเชียล</h3>
+              <p className="text-xs text-slate-500 font-normal">คลิกเพื่อคัดลอกข้อมูลติดต่อลงคลิปบอร์ด</p>
             </div>
 
             <div className="space-y-3">
@@ -120,13 +120,13 @@ export default function Contact() {
                     onClick={() => handleCopy(channel.value, channel.name)}
                     className="group flex items-center justify-between p-4 rounded-2xl bg-white border border-slate-200/80 shadow-sm hover:border-indigo-500/40 hover:shadow-md cursor-pointer transition-all duration-200"
                   >
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 border border-indigo-100 flex items-center justify-center group-hover:bg-indigo-600 group-hover:text-white transition-colors">
+                    <div className="flex items-center gap-3 min-w-0">
+                      <div className="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 border border-indigo-100 flex items-center justify-center shrink-0 group-hover:bg-indigo-600 group-hover:text-white transition-colors">
                         <IconComponent className="w-5 h-5" />
                       </div>
-                      <div>
+                      <div className="min-w-0">
                         <div className="text-xs font-display font-semibold text-indigo-600">{channel.name}</div>
-                        <div className="text-sm font-display font-bold text-slate-900">{channel.value}</div>
+                        <div className="text-sm font-display font-bold text-slate-900 truncate">{channel.value}</div>
                       </div>
                     </div>
 
@@ -145,14 +145,6 @@ export default function Contact() {
                 );
               })}
             </div>
-
-            {/* Note Box */}
-            <div className="p-4 rounded-2xl bg-indigo-50/60 border border-indigo-200/60 text-xs text-slate-600 space-y-1">
-              <div className="font-display font-bold text-indigo-700 flex items-center gap-1">
-                <span>💡</span> Note
-              </div>
-              <p>Social handles (`your@email.com`, `@yourusername`) are placeholders ready to edit in `src/data/artworks.js`.</p>
-            </div>
           </motion.div>
 
           {/* Form Column */}
@@ -164,10 +156,10 @@ export default function Contact() {
             className="lg:col-span-7 p-6 sm:p-8 rounded-3xl bg-white border border-slate-200/80 shadow-xl shadow-indigo-500/5"
           >
             <h3 className="text-2xl font-display font-bold text-slate-900 mb-1.5">
-              Send Commission Inquiry
+              ส่งข้อความติดต่อ (Send Message)
             </h3>
             <p className="text-xs text-slate-500 font-normal mb-6">
-              Fill out your concept ideas below and I will respond to your email.
+              กรอกข้อมูลเพื่อส่งข้อความหรือสอบถามเรื่องโปรเจกต์
             </p>
 
             {submitted ? (
@@ -175,25 +167,25 @@ export default function Contact() {
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-                className="py-10 text-center space-y-3 bg-indigo-50 rounded-2xl border border-indigo-200/60 p-6"
+                className="py-10 text-center space-y-4 bg-indigo-50 rounded-2xl border border-indigo-200/60 p-6"
               >
                 <div className="w-12 h-12 rounded-full bg-indigo-600 text-white inline-flex items-center justify-center text-xl shadow-md">
                   ✓
                 </div>
-                <h4 className="text-xl font-display font-bold text-slate-900">Inquiry Received!</h4>
+                <h4 className="text-xl font-display font-bold text-slate-900">ส่งข้อความเรียบร้อย!</h4>
                 <p className="text-sm text-slate-600 max-w-md mx-auto font-normal">
-                  Thank you! Your message has been logged. I will review your concept and reply shortly.
+                  ขอบคุณที่ติดต่อเข้ามาครับ ผมจะรีบตอบกลับผ่านทางอีเมลโดยเร็วที่สุด
                 </p>
               </motion.div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="space-y-1.5">
-                    <label className="text-xs font-display font-semibold text-slate-700 uppercase tracking-wider">Your Name</label>
+                    <label className="text-xs font-display font-semibold text-slate-700 uppercase tracking-wider">ชื่อของคุณ</label>
                     <input
                       type="text"
                       required
-                      placeholder="e.g. Alex Morgan"
+                      placeholder="เช่น สมชาย / Alex"
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                       className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 placeholder-slate-400 font-normal text-sm focus:outline-none focus:border-indigo-600 focus:bg-white transition-all"
@@ -201,11 +193,11 @@ export default function Contact() {
                   </div>
 
                   <div className="space-y-1.5">
-                    <label className="text-xs font-display font-semibold text-slate-700 uppercase tracking-wider">Email Address</label>
+                    <label className="text-xs font-display font-semibold text-slate-700 uppercase tracking-wider">อีเมลสำหรับติดต่อกลับ</label>
                     <input
                       type="email"
                       required
-                      placeholder="e.g. alex@example.com"
+                      placeholder="เช่น yourname@example.com"
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                       className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 placeholder-slate-400 font-normal text-sm focus:outline-none focus:border-indigo-600 focus:bg-white transition-all"
@@ -214,26 +206,26 @@ export default function Contact() {
                 </div>
 
                 <div className="space-y-1.5">
-                  <label className="text-xs font-display font-semibold text-slate-700 uppercase tracking-wider">Commission Category</label>
+                  <label className="text-xs font-display font-semibold text-slate-700 uppercase tracking-wider">หัวข้อที่ต้องการติดต่อ</label>
                   <select
-                    id="commission-type-select"
-                    value={formData.commissionType}
-                    onChange={(e) => setFormData({ ...formData, commissionType: e.target.value })}
+                    id="inquiry-type-select"
+                    value={formData.inquiryType}
+                    onChange={(e) => setFormData({ ...formData, inquiryType: e.target.value })}
                     className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 font-normal text-sm focus:outline-none focus:border-indigo-600 focus:bg-white transition-all"
                   >
-                    <option value="Character Illustration">Character Illustration</option>
-                    <option value="Portrait">Portrait</option>
-                    <option value="Fan Art">Fan Art</option>
-                    <option value="Custom Illustration">Custom Illustration</option>
+                    <option value="พูดคุยโปรเจกต์งานวาด (Project Discussion)">พูดคุยโปรเจกต์งานวาด (Project Discussion)</option>
+                    <option value="สอบถามทักษะและความถนัด (Skills Inquiry)">สอบถามทักษะและความถนัด (Skills Inquiry)</option>
+                    <option value="สอบถามโอกาสร่วมงาน (Job / Collaboration)">สอบถามโอกาสร่วมงาน (Job / Collaboration)</option>
+                    <option value="สอบถามทั่วไป (General Inquiry)">สอบถามทั่วไป (General Inquiry)</option>
                   </select>
                 </div>
 
                 <div className="space-y-1.5">
-                  <label className="text-xs font-display font-semibold text-slate-700 uppercase tracking-wider">Project Concept / Details</label>
+                  <label className="text-xs font-display font-semibold text-slate-700 uppercase tracking-wider">ข้อความ / รายละเอียด</label>
                   <textarea
                     rows={4}
                     required
-                    placeholder="Describe your character concept, references, pose ideas, and turnaround timeframe..."
+                    placeholder="เขียนรายละเอียดสิ่งที่ต้องการสอบถามหรือพูดคุย..."
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                     className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 placeholder-slate-400 font-normal text-sm focus:outline-none focus:border-indigo-600 focus:bg-white transition-all resize-none"
@@ -247,7 +239,7 @@ export default function Contact() {
                   className="btn-primary w-full py-3.5 px-6 font-display font-semibold text-sm flex items-center justify-center gap-2"
                 >
                   <Send className="w-4 h-4" />
-                  <span>Submit Inquiry</span>
+                  <span>ส่งข้อความ</span>
                 </motion.button>
               </form>
             )}
