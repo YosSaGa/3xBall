@@ -2,6 +2,7 @@
 "use client";
 
 import React, { useState, useEffect, useCallback, useRef } from "react";
+import OptimizedImage from "./OptimizedImage";
 
 // Inline Icons (Zero external dependencies)
 const ChevronLeftIcon = () => (
@@ -28,8 +29,10 @@ export interface CarouselItem {
   titleLine2?: string;
   desc?: string;
   img: string;
+  srcSet?: string;
   ctaText?: string;
   ctaUrl?: string;
+  originalArt?: unknown;
 }
 
 export interface CoverFlowCarouselProps {
@@ -307,16 +310,13 @@ export function CoverFlowCarousel({
                 }}
               >
                 {/* Photo */}
-                <img
+                <OptimizedImage
                   src={item.img}
+                  srcSet={item.srcSet}
                   alt={item.titleLine1}
-                  style={{
-                    position: "absolute",
-                    inset: 0,
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "cover",
-                  }}
+                  priority={offset === 0}
+                  containerClassName="absolute inset-0 w-full h-full"
+                  className="w-full h-full object-cover"
                 />
 
                 {/* Dark Vignette Overlay */}

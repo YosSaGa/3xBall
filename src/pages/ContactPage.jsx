@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Mail, MessageSquare, CheckCircle2, Copy, FileText, Globe, MapPin, ExternalLink, Sparkles, Send } from 'lucide-react';
 import { contactInfo, resumeData, artistBio } from '../data/artworks';
+import OptimizedImage from '../components/ui/OptimizedImage';
 
 // Custom Instagram SVG Icon
 function InstagramIcon({ className }) {
@@ -154,10 +155,13 @@ export default function ContactPage({ onOpenResume }) {
           <div className="flex flex-col md:flex-row items-center md:items-start justify-between gap-6 text-center md:text-left">
             <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-5">
               <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl overflow-hidden border-2 border-indigo-500/30 shadow-xl shrink-0">
-                <img
+                <OptimizedImage
                   src={artistBio.portraitImage}
+                  srcSet={artistBio.portraitSrcSet}
+                  sizes="(max-width: 640px) 80px, 96px"
                   alt={artistBio.name}
-                  className="w-full h-full object-cover"
+                  priority={true}
+                  containerClassName="w-full h-full"
                 />
               </div>
 

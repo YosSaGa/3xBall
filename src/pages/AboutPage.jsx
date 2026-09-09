@@ -2,6 +2,7 @@ import { useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { Sparkles, Palette, Image as ImageIcon, ShieldCheck, Layers, ArrowRight, Eye, FileText, Send, Award, Briefcase, Zap } from 'lucide-react';
+import OptimizedImage from '../components/ui/OptimizedImage';
 import { artistBio, artworksData } from '../data/artworks';
 
 const containerVariants = {
@@ -172,10 +173,14 @@ export default function AboutPage({ onOpenResume }) {
               >
                 <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden bg-[#101326] border border-white/15 shadow-2xl p-2 sm:p-3 group">
                   <div className="rounded-xl sm:rounded-2xl overflow-hidden border border-white/10 relative aspect-[16/10] sm:aspect-[16/9] md:aspect-[21/9] max-h-[520px]">
-                    <img
-                      src="/assets/artworks/hero-banner.png"
+                    <OptimizedImage
+                      src={artistBio.heroBannerImage}
+                      srcSet="/assets/artworks/hero-banner-400w.webp 400w, /assets/artworks/hero-banner-800w.webp 800w"
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 100vw, 1200px"
                       alt="Featured Horizontal Artwork by Chatchanok Makmool"
-                      className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
+                      priority={true}
+                      containerClassName="w-full h-full"
+                      className="group-hover:scale-105 transition-transform duration-700 ease-out"
                     />
 
                     {/* Gradient Overlay & High-Tech Badge */}
@@ -259,10 +264,12 @@ export default function AboutPage({ onOpenResume }) {
             >
               <div className="p-3 rounded-2xl sm:rounded-3xl bg-[#101326] border border-white/10 shadow-2xl space-y-3">
                 <div className="relative rounded-xl sm:rounded-2xl overflow-hidden border border-white/10 aspect-[3/4]">
-                  <img
+                  <OptimizedImage
                     src={artistBio.portraitImage}
+                    srcSet={artistBio.portraitSrcSet}
+                    sizes="(max-width: 640px) 100vw, 400px"
                     alt="Chatchanok Makmool Studio Portrait"
-                    className="w-full h-full object-cover object-center"
+                    containerClassName="w-full h-full"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-4">
                     <div>
@@ -383,10 +390,13 @@ export default function AboutPage({ onOpenResume }) {
                   className="studio-card overflow-hidden group border border-white/10"
                 >
                   <div className="aspect-[4/5] overflow-hidden bg-[#0A0C16] relative">
-                    <img
-                      src={art.image}
+                    <OptimizedImage
+                      src={art.thumbnail || art.image}
+                      srcSet={art.srcSet}
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                       alt={art.title}
-                      className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-700 ease-out"
+                      containerClassName="w-full h-full"
+                      className="group-hover:scale-108 transition-transform duration-700 ease-out"
                     />
                     <div className="absolute inset-0 bg-indigo-950/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-xs">
                       <span className="px-4 py-2 rounded-full bg-white text-slate-900 text-xs font-display font-bold shadow-xl">

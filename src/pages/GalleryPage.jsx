@@ -64,7 +64,8 @@ export default function GalleryPage({ initialMode }) {
     titleLine1: art.title.toUpperCase(),
     titleLine2: `– ${art.year} • ${art.role ? art.role.toUpperCase() : 'CONCEPT ART'}`,
     desc: art.description,
-    img: art.image,
+    img: art.thumbnail || art.image,
+    srcSet: art.srcSet,
     ctaText: "Inspect Specs (ดูสเปก)",
     originalArt: art,
   }));

@@ -1,6 +1,7 @@
 import { useRef } from 'react';
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { Maximize2, Tag, Layers, Wrench, Sparkles } from 'lucide-react';
+import OptimizedImage from './ui/OptimizedImage';
 
 export default function ArtworkCard({ artwork, index, onSelect }) {
   const cardRef = useRef(null);
@@ -86,11 +87,14 @@ export default function ArtworkCard({ artwork, index, onSelect }) {
             isLandscape ? 'aspect-[16/10] sm:aspect-[16/9]' : 'aspect-[4/5]'
           }`}
         >
-          <img
-            src={artwork.image}
+          <OptimizedImage
+            src={artwork.thumbnail || artwork.image}
+            srcSet={artwork.srcSet}
+            sizes={isLandscape ? "(max-width: 640px) 100vw, (max-width: 1024px) 100vw, 66vw" : "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"}
             alt={artwork.title}
-            loading="lazy"
-            className="w-full h-full object-cover object-center group-hover:scale-108 transition-transform duration-700 ease-out"
+            priority={index < 2}
+            containerClassName="w-full h-full"
+            className="group-hover:scale-108 transition-transform duration-700 ease-out"
           />
 
           {/* Vignette Shadow on Image */}

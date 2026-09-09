@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Calendar, Tag, Layers, Wrench, Clock, Send, ZoomIn, ZoomOut } from 'lucide-react';
+import OptimizedImage from './ui/OptimizedImage';
 
 export default function ArtworkModal({ artwork, onClose }) {
   const navigate = useNavigate();
@@ -85,12 +86,15 @@ export default function ArtworkModal({ artwork, onClose }) {
           </div>
 
           <div className="flex flex-col lg:grid lg:grid-cols-12 overflow-y-auto">
-            {/* Artwork Showcase Canvas */}
-            <div className="lg:col-span-7 bg-[#07080F] flex items-center justify-center p-3 sm:p-6 min-h-[260px] max-h-[48vh] sm:max-h-[55vh] lg:max-h-[78vh] overflow-auto shrink-0 relative group">
-              <img
+            <div className="lg:col-span-7 bg-[#07080F] flex items-center justify-center p-3 sm:p-6 min-h-[280px] max-h-[48vh] sm:max-h-[55vh] lg:max-h-[78vh] overflow-auto shrink-0 relative group">
+              <OptimizedImage
                 src={artwork.image}
+                lowResSrc={artwork.thumbnail}
                 alt={artwork.title}
-                className={`max-h-full w-auto max-w-full object-contain rounded-xl shadow-2xl transition-transform duration-300 ${
+                priority={true}
+                objectFit="contain"
+                containerClassName="max-h-full w-auto max-w-full rounded-xl shadow-2xl flex items-center justify-center"
+                className={`max-h-full w-auto max-w-full object-contain transition-transform duration-300 ${
                   isZoomed ? 'scale-150 cursor-zoom-out' : 'cursor-zoom-in'
                 }`}
                 onClick={() => setIsZoomed(!isZoomed)}

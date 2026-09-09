@@ -159,6 +159,20 @@
     radial-gradient(at 80% 85%, rgba(139, 92, 246, 0.1) 0px, transparent 40%);
 }
 
+/* Studio Image Skeleton Shimmer Animation */
+@keyframes studio-shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.animate-studio-shimmer {
+  animation: studio-shimmer 1.8s infinite ease-in-out;
+}
+
 /* Print Optimization for Recruiter Resume */
 @media print {
   body {
