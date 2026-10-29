@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Printer, Mail, MapPin, Briefcase, GraduationCap, Wrench, CheckCircle2, Globe, Sparkles, Send } from 'lucide-react';
+import { X, Printer, Mail, Phone, MapPin, Briefcase, GraduationCap, Wrench, CheckCircle2, Globe, Sparkles, Send } from 'lucide-react';
 import { resumeData } from '../data/artworks';
 
 export default function ResumeModal({ isOpen, onClose, onOpenContact }) {
@@ -101,15 +101,19 @@ export default function ResumeModal({ isOpen, onClose, onOpenContact }) {
                 <div className="flex flex-wrap gap-4 text-xs text-slate-400 pt-1 font-normal">
                   <span className="inline-flex items-center gap-1.5">
                     <MapPin className="w-3.5 h-3.5 text-indigo-400" />
-                    {resumeData.location}
+                    {resumeData.location} (อายุ {resumeData.age || '26 ปี'})
+                  </span>
+                  <span className="inline-flex items-center gap-1.5">
+                    <Phone className="w-3.5 h-3.5 text-emerald-400" />
+                    <a href={`tel:${resumeData.phone?.replace(/-/g, '')}`} className="text-slate-300 hover:text-white">
+                      {resumeData.phone}
+                    </a>
                   </span>
                   <span className="inline-flex items-center gap-1.5">
                     <Mail className="w-3.5 h-3.5 text-indigo-400" />
-                    {resumeData.email}
-                  </span>
-                  <span className="inline-flex items-center gap-1.5">
-                    <Globe className="w-3.5 h-3.5 text-indigo-400" />
-                    Portfolio Archive
+                    <a href={`mailto:${resumeData.email}`} className="text-slate-300 hover:text-white">
+                      {resumeData.email}
+                    </a>
                   </span>
                 </div>
               </div>

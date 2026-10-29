@@ -2,13 +2,11 @@ import { Link } from 'react-router-dom';
 import { ArrowUp, FileText } from 'lucide-react';
 
 const footerNavLinks = [
-  { name: 'โปรไฟล์ & เกี่ยวกับ', path: '/' },
-  { name: 'แกลเลอรีผลงาน', path: '/gallery' },
-  { name: 'ทักษะ & ไปป์ไลน์', path: '/skills' },
-  { name: 'ติดต่องาน / สัมภาษณ์', path: '/contact' },
+  { name: 'ผลงาน', path: '/' },
+  { name: 'โปรไฟล์', path: '/profile' },
 ];
 
-export default function Footer({ onOpenResume }) {
+export default function Footer() {
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
@@ -17,15 +15,15 @@ export default function Footer({ onOpenResume }) {
   };
 
   return (
-    <footer className="bg-[#0A0C16] text-slate-300 py-10 sm:py-14 border-t border-white/10 relative overflow-hidden">
+    <footer className="bg-[#0A0C16] text-slate-300 py-8 sm:py-12 border-t border-white/10 relative overflow-hidden">
       {/* Ambient background light */}
       <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[250px] bg-gradient-to-t from-indigo-900/10 via-purple-900/5 to-transparent rounded-full blur-[100px] pointer-events-none -z-10" />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
         <div className="flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
           
           {/* Brand & Recruiter Availability */}
-          <div className="space-y-2">
+          <div className="space-y-1.5">
             <Link to="/" className="inline-flex items-center gap-2.5 font-display font-bold text-lg text-white select-none">
               <span className="w-8 h-8 rounded-xl bg-gradient-to-tr from-indigo-600 to-violet-600 flex items-center justify-center text-white text-xs font-extrabold shadow-md shadow-indigo-500/30">
                 CM
@@ -49,15 +47,15 @@ export default function Footer({ onOpenResume }) {
                 {link.name}
               </Link>
             ))}
-            {onOpenResume && (
-              <button
-                onClick={onOpenResume}
-                className="hover:text-white transition-colors py-1 flex items-center gap-1 text-indigo-400 cursor-pointer"
-              >
-                <FileText className="w-3.5 h-3.5" />
-                <span>Resume (CV)</span>
-              </button>
-            )}
+            <a
+              href="/portfolio.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-white transition-colors py-1 flex items-center gap-1 text-indigo-400 cursor-pointer"
+            >
+              <FileText className="w-3.5 h-3.5" />
+              <span>Resume (CV)</span>
+            </a>
           </div>
 
           {/* Back to Top */}
@@ -72,12 +70,12 @@ export default function Footer({ onOpenResume }) {
 
         </div>
 
-        <div className="pt-6 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-400">
+        <div className="pt-5 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-400">
           <div>
-            © {new Date().getFullYear()} Chatchanok Makmool. All rights reserved. Professional 2D Concept Art & Illustration Portfolio.
+            © {new Date().getFullYear()} Chatchanok Makmool. All rights reserved. 2D Concept Art & Digital Illustration.
           </div>
           <div className="text-[11px] text-slate-400 font-mono">
-            Optimized for Game & Animation Studio Recruitment
+            Optimized for Game & Animation Studios
           </div>
         </div>
       </div>

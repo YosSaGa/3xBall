@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Palette, Sparkles, LayoutGrid, Maximize2, Minimize2, ChevronRight } from 'lucide-react';
+import { Sparkles, LayoutGrid, Maximize2, Minimize2, ChevronRight } from 'lucide-react';
 import ArtworkCard from '../components/ArtworkCard';
 import ArtworkModal from '../components/ArtworkModal';
 import { CoverFlowCarousel } from '@/components/ui/3-d-coverflow-carousel';
@@ -12,7 +12,7 @@ export default function GalleryPage({ initialMode }) {
   const [viewMode, setViewMode] = useState(() => {
     if (initialMode) return initialMode;
     if (location.pathname === '/showcase' || location.pathname === '/coverflow') return '3d';
-    return '3d'; // Default to 3D mode for maximum wow factor!
+    return '3d';
   });
 
   const [selectedArtwork, setSelectedArtwork] = useState(null);
@@ -46,12 +46,11 @@ export default function GalleryPage({ initialMode }) {
   };
 
   const categories = [
-    { id: 'All', label: 'All Projects', count: artworksData.length },
-    { id: 'Landscape / Keyframe', label: 'Landscape & Keyframe', count: artworksData.filter(a => a.category === 'Landscape / Keyframe').length },
-    { id: 'Digital Illustration', label: 'Digital Illustration', count: artworksData.filter(a => a.category === 'Digital Illustration').length },
-    { id: 'Cyberpunk / Character', label: 'Sci-Fi / Cyberpunk', count: artworksData.filter(a => a.category === 'Cyberpunk / Character').length },
-    { id: 'Fantasy Concept', label: 'Fantasy Concept', count: artworksData.filter(a => a.category === 'Fantasy Concept').length },
-    { id: 'Portrait Illustration', label: 'Character Portrait', count: artworksData.filter(a => a.category === 'Portrait Illustration').length },
+    { id: 'All', label: 'ทั้งหมด', count: artworksData.length },
+    { id: 'ตัวละคร', label: 'ตัวละคร', count: artworksData.filter(a => a.category === 'ตัวละคร').length },
+    { id: 'ฉาก & คีย์เฟรม', label: 'ฉาก & คีย์เฟรม', count: artworksData.filter(a => a.category === 'ฉาก & คีย์เฟรม').length },
+    { id: 'ภาพประกอบ', label: 'ภาพประกอบ', count: artworksData.filter(a => a.category === 'ภาพประกอบ').length },
+    { id: 'คอนเซปต์ดีไซน์', label: 'คอนเซปต์ดีไซน์', count: artworksData.filter(a => a.category === 'คอนเซปต์ดีไซน์').length },
   ];
 
   const filteredArtworks = activeCategory === 'All'
@@ -60,13 +59,10 @@ export default function GalleryPage({ initialMode }) {
 
   // 3D Carousel Item Mapping
   const artistItems = artworksData.map((art) => ({
-    tag: `#${art.category.split('/')[0].trim().replace(/\s+/g, '')}`,
-    titleLine1: art.title.toUpperCase(),
-    titleLine2: `– ${art.year} • ${art.role ? art.role.toUpperCase() : 'CONCEPT ART'}`,
-    desc: art.description,
-    img: art.thumbnail || art.image,
-    srcSet: art.srcSet,
-    ctaText: "Inspect Specs (ดูสเปก)",
+    tag: `#${art.category.replace(/\s+/g, '')}`,
+    titleLine1: art.title,
+    img: art.image,
+    ctaText: "ดูภาพเต็มจอ",
     originalArt: art,
   }));
 
@@ -76,11 +72,30 @@ export default function GalleryPage({ initialMode }) {
     }
   };
 
+  const currentIndex = selectedArtwork
+    ? filteredArtworks.findIndex(a => a.id === selectedArtwork.id)
+    : -1;
+
+  const handlePrev = () => {
+    if (currentIndex > 0) {
+      setSelectedArtwork(filteredArtworks[currentIndex - 1]);
+    } else if (filteredArtworks.length > 0) {
+      setSelectedArtwork(filteredArtworks[filteredArtworks.length - 1]);
+    }
+  };
+
+  const handleNext = () => {
+    if (currentIndex < filteredArtworks.length - 1) {
+      setSelectedArtwork(filteredArtworks[currentIndex + 1]);
+    } else if (filteredArtworks.length > 0) {
+      setSelectedArtwork(filteredArtworks[0]);
+    }
+  };
 
   return (
     <div className="w-full relative">
       {/* ============================================================ */}
-      {/* MODE 1: FULL SCREEN 3D COVERFLOW MODE (เต็มจอ EDGE-TO-EDGE)  */}
+      {/* MODE 1: FULL SCREEN 3D COVERFLOW MODE                       */}
       {/* ============================================================ */}
       {viewMode === '3d' && (
         <motion.div
@@ -103,15 +118,14 @@ export default function GalleryPage({ initialMode }) {
               <div className="flex items-center gap-2">
                 <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/[0.08] border border-white/15 text-xs font-display font-semibold text-slate-200 backdrop-blur-xl shadow-lg">
                   <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
-                  <span className="hidden sm:inline">โหมด 3D เต็มจอ (IMMERSIVE SHOWCASE)</span>
-                  <span className="sm:hidden font-bold">3D เต็มจอ</span>
+                  <span>3D เต็มจอ</span>
                   <span className="text-[10px] px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 font-mono">
-                    {artworksData.length} PIECES
+                    {artworksData.length} รูป
                   </span>
                 </div>
               </div>
 
-              {/* Center: Mode Switcher (3D Fullscreen vs Grid Gallery) */}
+              {/* Center: Mode Switcher */}
               <div className="inline-flex items-center p-1 rounded-full bg-black/60 border border-white/15 backdrop-blur-xl shadow-2xl">
                 <button
                   onClick={() => setViewMode('3d')}
@@ -123,7 +137,7 @@ export default function GalleryPage({ initialMode }) {
                     transition={{ type: 'spring', stiffness: 400, damping: 32 }}
                   />
                   <Sparkles className="w-3.5 h-3.5 text-amber-300" />
-                  <span>โหมด 3D เต็มจอ</span>
+                  <span>โหมด 3D</span>
                 </button>
 
                 <button
@@ -131,18 +145,16 @@ export default function GalleryPage({ initialMode }) {
                   className="relative px-3 sm:px-5 py-1.5 sm:py-2 text-xs sm:text-sm font-display font-bold rounded-full transition-all flex items-center gap-1.5 sm:gap-2 cursor-pointer text-slate-400 hover:text-white"
                 >
                   <LayoutGrid className="w-3.5 h-3.5 text-indigo-300" />
-                  <span>โหมด Grid รวม</span>
+                  <span>โหมด Grid</span>
                 </button>
               </div>
 
-              {/* Right: Dataset Toggle & Browser Fullscreen Button */}
+              {/* Right: Fullscreen Button */}
               <div className="flex items-center gap-2">
-
-                {/* Browser Fullscreen Button */}
                 <button
                   onClick={toggleBrowserFullscreen}
                   className="inline-flex items-center gap-1.5 px-3 py-1.5 sm:py-2 rounded-full bg-white/10 hover:bg-white/20 active:bg-white/30 border border-white/20 text-xs font-display font-semibold text-slate-200 transition-all cursor-pointer backdrop-blur-xl shadow-lg hover:border-white/30"
-                  title={isBrowserFullscreen ? 'ออกจากโหมดเต็มจอ (ESC)' : 'ขยายเต็มจอเบราว์เซอร์ (Fullscreen Mode)'}
+                  title={isBrowserFullscreen ? 'ออกจากโหมดเต็มจอ (ESC)' : 'ขยายเต็มจอเบราว์เซอร์'}
                 >
                   {isBrowserFullscreen ? (
                     <>
@@ -160,28 +172,23 @@ export default function GalleryPage({ initialMode }) {
             </div>
           </div>
 
-          {/* Center: 3D CoverFlow Stage stretching to full height */}
+          {/* Center: 3D CoverFlow Stage */}
           <div className="flex-1 w-full flex items-center justify-center relative z-10">
             <CoverFlowCarousel
               fullScreen={true}
               items={artistItems}
-              sectionLabel="FEATURED STUDIO ARTWORKS & KEYFRAMES"
+              sectionLabel="PORTFOLIO SHOWCASE"
               autoplay={true}
               autoplayDelay={4500}
               onCtaClick={handleCarouselCtaClick}
             />
           </div>
 
-          {/* Bottom Floating Footer / Helper Controls */}
+          {/* Bottom Floating Footer */}
           <div className="w-full z-30 px-3 sm:px-6 py-2.5 sm:py-3 bg-gradient-to-t from-black/80 via-black/40 to-transparent">
             <div className="max-w-[1600px] mx-auto flex items-center justify-between gap-3 text-xs text-slate-400">
-              <div className="hidden sm:flex items-center gap-2 font-mono text-[11px] text-slate-400">
-                <span className="px-2 py-0.5 rounded bg-white/10 text-slate-300 font-sans font-bold">←</span>
-                <span className="px-2 py-0.5 rounded bg-white/10 text-slate-300 font-sans font-bold">→</span>
-                <span>ปัดนิ้ว หรือกดลูกศรคีย์บอร์ดเพื่อหมุน 3D • คลิกการ์ดตรงกลางเพื่อเปิดดูสเปกเต็ม (Specs Breakdown)</span>
-              </div>
-              <div className="sm:hidden text-[11px] text-slate-400">
-                ปัดนิ้วเพื่อหมุน 3D • แตะการ์ดเพื่อดูสเปก
+              <div className="text-[11px] text-slate-400">
+                ปัดนิ้วหรือกดลูกศรเพื่อหมุน 3D • แตะเพื่อดูรูปเต็มจอ
               </div>
 
               <button
@@ -194,11 +201,16 @@ export default function GalleryPage({ initialMode }) {
             </div>
           </div>
 
-          {/* Modal inside Fullscreen Container so it displays in Browser Fullscreen */}
+          {/* Modal inside Fullscreen Container */}
           {selectedArtwork && (
             <ArtworkModal
+              key={selectedArtwork.id}
               artwork={selectedArtwork}
               onClose={() => setSelectedArtwork(null)}
+              onPrev={handlePrev}
+              onNext={handleNext}
+              currentIndex={currentIndex >= 0 ? currentIndex : 0}
+              totalCount={filteredArtworks.length}
             />
           )}
         </motion.div>
@@ -219,70 +231,55 @@ export default function GalleryPage({ initialMode }) {
           {/* Background ambient lighting */}
           <div className="absolute top-20 left-1/2 -translate-x-1/2 w-[850px] h-[500px] bg-gradient-to-tr from-indigo-600/15 via-purple-600/10 to-amber-500/10 rounded-full blur-[170px] pointer-events-none -z-10" />
 
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full space-y-8 sm:space-y-10">
-            {/* Section Header */}
-            <div className="text-center max-w-3xl mx-auto space-y-3 sm:space-y-4">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full space-y-6 sm:space-y-8">
+            {/* Minimal Header */}
+            <div className="text-center max-w-2xl mx-auto space-y-3">
+              <motion.h1
+                initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
-                className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-indigo-500/10 border border-indigo-500/30 text-indigo-300 font-display font-semibold text-xs uppercase tracking-wider backdrop-blur-md"
+                className="text-2xl sm:text-4xl md:text-5xl font-display font-black text-white tracking-tight"
               >
-                <Palette className="w-3.5 h-3.5 text-indigo-400" />
-                <span>Artwork Archive & Case Studies ({artworksData.length} Selected Pieces)</span>
-              </motion.div>
-
-              <motion.h1
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.1 }}
-                className="text-3xl sm:text-5xl md:text-6xl font-display font-black text-white tracking-tight leading-tight"
-              >
-                Selected Production Portfolio
+                ผลงานภาพวาด ({artworksData.length} ชิ้น)
               </motion.h1>
 
               <motion.p
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-                className="text-slate-300 text-sm sm:text-base md:text-lg font-normal leading-relaxed"
-              >
-                แฟ้มรวมผลงานภาพวาดดิจิทัล, การออกแบบตัวละคร และคีย์เฟรมมุมมองภาพยนตร์สำหรับโปรดักชันสตูดิโอ คลิกที่ภาพเพื่อเปิดดูสเปกและรายละเอียดเชิงเทคนิค
-              </motion.p>
-
-              {/* VIEW MODE SWITCHER (3D Coverflow vs Grid Gallery) */}
-              <motion.div
                 initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.25 }}
-                className="pt-2 flex justify-center"
+                transition={{ duration: 0.5, delay: 0.1 }}
+                className="text-slate-400 text-xs sm:text-sm font-normal"
               >
-                <div className="inline-flex items-center p-1.5 rounded-full bg-white/[0.04] border border-white/10 backdrop-blur-md shadow-xl">
+                คลิกที่รูปภาพเพื่อเปิดดูรูปขนาดเต็ม
+              </motion.p>
+
+              {/* VIEW MODE SWITCHER */}
+              <div className="pt-1 flex justify-center">
+                <div className="inline-flex items-center p-1 rounded-full bg-white/[0.04] border border-white/10 backdrop-blur-md shadow-xl">
                   <button
                     onClick={() => setViewMode('3d')}
-                    className="relative px-4 sm:px-5 py-2 text-xs sm:text-sm font-display font-bold rounded-full transition-all flex items-center gap-2 cursor-pointer text-slate-400 hover:text-white"
+                    className="relative px-4 py-1.5 text-xs sm:text-sm font-display font-bold rounded-full transition-all flex items-center gap-1.5 cursor-pointer text-slate-400 hover:text-white"
                   >
-                    <Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-300" />
-                    <span>โหมด 3D เต็มจอ</span>
+                    <Sparkles className="w-3.5 h-3.5 text-amber-300" />
+                    <span>โหมด 3D</span>
                   </button>
 
                   <button
                     onClick={() => setViewMode('grid')}
-                    className="relative px-4 sm:px-5 py-2 text-xs sm:text-sm font-display font-bold rounded-full transition-all flex items-center gap-2 cursor-pointer text-white"
+                    className="relative px-4 py-1.5 text-xs sm:text-sm font-display font-bold rounded-full transition-all flex items-center gap-1.5 cursor-pointer text-white"
                   >
                     <motion.div
                       layoutId="activeViewModeTab"
                       className="absolute inset-0 bg-gradient-to-r from-indigo-600 via-indigo-500 to-violet-600 rounded-full shadow-lg shadow-indigo-600/40 -z-10"
                       transition={{ type: 'spring', stiffness: 400, damping: 32 }}
                     />
-                    <LayoutGrid className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-indigo-300" />
-                    <span>โหมด Grid Gallery</span>
+                    <LayoutGrid className="w-3.5 h-3.5 text-indigo-300" />
+                    <span>โหมด Grid รวมรูป</span>
                   </button>
                 </div>
-              </motion.div>
+              </div>
             </div>
 
-            {/* Category Filter Pills with Framer layoutId */}
+            {/* Category Filter Pills */}
             <div className="flex items-center justify-center gap-1.5 sm:gap-2 flex-wrap">
               {categories.map((cat) => {
                 const isActive = activeCategory === cat.id;
@@ -292,7 +289,7 @@ export default function GalleryPage({ initialMode }) {
                     whileTap={{ scale: 0.96 }}
                     key={cat.id}
                     onClick={() => setActiveCategory(cat.id)}
-                    className={`relative px-3.5 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-display font-semibold rounded-full transition-colors duration-200 touch-manipulation select-none cursor-pointer flex items-center gap-1.5 z-10 ${
+                    className={`relative px-3.5 sm:px-4 py-1.5 text-xs sm:text-sm font-display font-semibold rounded-full transition-colors duration-200 touch-manipulation select-none cursor-pointer flex items-center gap-1.5 z-10 ${
                       isActive
                         ? 'text-white'
                         : 'text-slate-400 hover:text-white bg-white/[0.03] hover:bg-white/[0.08] border border-white/10'
@@ -317,10 +314,7 @@ export default function GalleryPage({ initialMode }) {
             </div>
 
             {/* Dynamic Grid */}
-            <motion.div
-              layout
-              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 lg:gap-8"
-            >
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
               <AnimatePresence>
                 {filteredArtworks.map((artwork, idx) => (
                   <ArtworkCard
@@ -331,14 +325,19 @@ export default function GalleryPage({ initialMode }) {
                   />
                 ))}
               </AnimatePresence>
-            </motion.div>
+            </div>
           </div>
 
-          {/* Shared Production Case Study Lightbox Modal */}
+          {/* Lightbox Image Viewer */}
           {selectedArtwork && (
             <ArtworkModal
+              key={selectedArtwork.id}
               artwork={selectedArtwork}
               onClose={() => setSelectedArtwork(null)}
+              onPrev={handlePrev}
+              onNext={handleNext}
+              currentIndex={currentIndex >= 0 ? currentIndex : 0}
+              totalCount={filteredArtworks.length}
             />
           )}
         </motion.div>

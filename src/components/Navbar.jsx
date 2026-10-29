@@ -4,13 +4,11 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, FileText, Send } from 'lucide-react';
 
 const navLinks = [
-  { name: 'โปรไฟล์', path: '/' },
-  { name: 'ผลงาน', path: '/gallery' },
-  { name: 'ทักษะ & ไปป์ไลน์', path: '/skills' },
-  { name: 'ติดต่อฉัน', path: '/contact' },
+  { name: 'ผลงาน', path: '/' },
+  { name: 'โปรไฟล์', path: '/profile' },
 ];
 
-export default function Navbar({ onOpenResume }) {
+export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
@@ -63,17 +61,25 @@ export default function Navbar({ onOpenResume }) {
           {/* Desktop Navigation with Animated Framer Pill */}
           <nav className="hidden md:flex items-center gap-1 bg-white/[0.04] p-1.5 rounded-full border border-white/10 relative">
             {navLinks.map((link) => {
-              const isActive =
-                location.pathname === link.path ||
-                (link.path === '/' && location.pathname === '/about') ||
-                (link.path === '/gallery' && (location.pathname === '/showcase' || location.pathname === '/coverflow')) ||
-                (link.path === '/skills' && location.pathname === '/commissions');
+              const isWorksActive =
+                link.path === '/' &&
+                (location.pathname === '/' ||
+                  location.pathname === '/gallery' ||
+                  location.pathname === '/showcase' ||
+                  location.pathname === '/coverflow');
+              const isProfileActive =
+                link.path === '/profile' &&
+                (location.pathname === '/profile' ||
+                  location.pathname === '/about' ||
+                  location.pathname === '/contact' ||
+                  location.pathname === '/skills');
+              const isActive = isWorksActive || isProfileActive;
 
               return (
                 <Link
                   key={link.name}
                   to={link.path}
-                  className={`relative px-3.5 lg:px-4 py-1.5 text-xs lg:text-sm font-display font-semibold rounded-full transition-colors duration-200 z-10 whitespace-nowrap ${
+                  className={`relative px-4 lg:px-5 py-1.5 text-xs lg:text-sm font-display font-semibold rounded-full transition-colors duration-200 z-10 whitespace-nowrap ${
                     isActive ? 'text-white' : 'text-slate-400 hover:text-white'
                   }`}
                 >
@@ -98,30 +104,30 @@ export default function Navbar({ onOpenResume }) {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
               </span>
-              <span>พร้อมเริ่มงาน (Open to Work)</span>
+              <span>พร้อมเริ่มงาน</span>
             </div>
 
-            {/* Resume Button */}
-            {onOpenResume && (
-              <motion.button
-                whileHover={{ scale: 1.04 }}
-                whileTap={{ scale: 0.96 }}
-                onClick={onOpenResume}
-                className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-display font-semibold text-slate-200 bg-white/10 hover:bg-white/15 border border-white/15 rounded-full transition-all cursor-pointer"
-              >
-                <FileText className="w-3.5 h-3.5 text-indigo-400" />
-                <span>Resume (CV)</span>
-              </motion.button>
-            )}
+            {/* Resume PDF Link */}
+            <motion.a
+              href="/portfolio.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              whileHover={{ scale: 1.04 }}
+              whileTap={{ scale: 0.96 }}
+              className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-display font-semibold text-slate-200 bg-white/10 hover:bg-white/15 border border-white/15 rounded-full transition-all cursor-pointer"
+            >
+              <FileText className="w-3.5 h-3.5 text-indigo-400" />
+              <span>Resume (CV)</span>
+            </motion.a>
 
-            {/* Direct Hire CTA */}
+            {/* Direct Contact CTA */}
             <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }}>
               <Link
-                to="/contact"
+                to="/profile"
                 className="btn-primary shimmer-effect px-3.5 sm:px-4 py-2 text-xs font-display font-bold flex items-center gap-1.5 rounded-full shadow-md shadow-indigo-600/30 whitespace-nowrap"
               >
                 <Send className="w-3 h-3" />
-                <span>สมัครงาน / สัมภาษณ์</span>
+                <span>ติดต่องาน</span>
               </Link>
             </motion.div>
 
@@ -160,17 +166,25 @@ export default function Navbar({ onOpenResume }) {
               <div className="flex items-center justify-between pb-2 border-b border-white/10">
                 <span className="text-xs font-display font-semibold text-emerald-400 flex items-center gap-2">
                   <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                  Available for Full-Time / Contract
+                  พร้อมเริ่มงานประจำ / สัญญาจ้าง
                 </span>
               </div>
 
               <div className="space-y-1">
                 {navLinks.map((link) => {
-                  const isActive =
-                    location.pathname === link.path ||
-                    (link.path === '/' && location.pathname === '/about') ||
-                    (link.path === '/gallery' && (location.pathname === '/showcase' || location.pathname === '/coverflow')) ||
-                    (link.path === '/skills' && location.pathname === '/commissions');
+                  const isWorksActive =
+                    link.path === '/' &&
+                    (location.pathname === '/' ||
+                      location.pathname === '/gallery' ||
+                      location.pathname === '/showcase' ||
+                      location.pathname === '/coverflow');
+                  const isProfileActive =
+                    link.path === '/profile' &&
+                    (location.pathname === '/profile' ||
+                      location.pathname === '/about' ||
+                      location.pathname === '/contact' ||
+                      location.pathname === '/skills');
+                  const isActive = isWorksActive || isProfileActive;
 
                   return (
                     <Link
@@ -190,26 +204,24 @@ export default function Navbar({ onOpenResume }) {
               </div>
 
               <div className="pt-2 border-t border-white/10 space-y-2">
-                {onOpenResume && (
-                  <button
-                    onClick={() => {
-                      setIsOpen(false);
-                      onOpenResume();
-                    }}
-                    className="flex items-center justify-center gap-2 w-full py-2.5 text-xs font-display font-bold text-slate-200 bg-white/10 hover:bg-white/15 rounded-xl transition-colors border border-white/10"
-                  >
-                    <FileText className="w-4 h-4 text-indigo-400" />
-                    <span>เปิดดูเรซูเม่ (View Resume / CV)</span>
-                  </button>
-                )}
+                <a
+                  href="/portfolio.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => setIsOpen(false)}
+                  className="flex items-center justify-center gap-2 w-full py-2.5 text-xs font-display font-bold text-slate-200 bg-white/10 hover:bg-white/15 rounded-xl transition-colors border border-white/10"
+                >
+                  <FileText className="w-4 h-4 text-indigo-400" />
+                  <span>เปิดดูเรซูเม่ (Resume / CV)</span>
+                </a>
 
                 <Link
-                  to="/contact"
+                  to="/profile"
                   onClick={() => setIsOpen(false)}
                   className="btn-primary shimmer-effect flex items-center justify-center gap-2 w-full py-3 text-xs font-display font-bold rounded-xl shadow-lg shadow-indigo-600/30 text-white"
                 >
                   <Send className="w-4 h-4" />
-                  <span>ติดต่อนัดสัมภาษณ์ / Art Test</span>
+                  <span>ติดต่องาน / สัมภาษณ์</span>
                 </Link>
               </div>
             </motion.div>

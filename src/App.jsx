@@ -1,30 +1,33 @@
-import { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation, useNavigate, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import ScrollToTop from './components/ScrollToTop';
-import ResumeModal from './components/ResumeModal';
 
 import AboutPage from './pages/AboutPage';
 import GalleryPage from './pages/GalleryPage';
-import SkillsPage from './pages/SkillsPage';
-import ContactPage from './pages/ContactPage';
+import StudioParticles from './components/ui/StudioParticles';
 
-function AnimatedRoutes({ onOpenResume }) {
+function AnimatedRoutes() {
   const location = useLocation();
 
   return (
     <AnimatePresence mode="wait">
       <Routes location={location} key={location.pathname}>
-        <Route path="/" element={<AboutPage onOpenResume={onOpenResume} />} />
-        <Route path="/about" element={<AboutPage onOpenResume={onOpenResume} />} />
+        {/* หน้าหลักคือหน้าผลงาน (Works / Gallery) */}
+        <Route path="/" element={<GalleryPage />} />
         <Route path="/gallery" element={<GalleryPage />} />
         <Route path="/showcase" element={<GalleryPage initialMode="3d" />} />
         <Route path="/coverflow" element={<GalleryPage initialMode="3d" />} />
-        <Route path="/skills" element={<SkillsPage onOpenResume={onOpenResume} />} />
-        <Route path="/commissions" element={<SkillsPage onOpenResume={onOpenResume} />} />
-        <Route path="/contact" element={<ContactPage onOpenResume={onOpenResume} />} />
+
+        {/* หน้า Profile ปรับให้กระชับ มินิมอล */}
+        <Route path="/profile" element={<AboutPage />} />
+        <Route path="/about" element={<AboutPage />} />
+
+        {/* Redirect หน้าอื่นๆ ให้เข้าหน้า Profile เพื่อให้ข้อมูลครบถ้วน */}
+        <Route path="/skills" element={<Navigate to="/profile" replace />} />
+        <Route path="/commissions" element={<Navigate to="/profile" replace />} />
+        <Route path="/contact" element={<Navigate to="/profile" replace />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </AnimatePresence>
@@ -32,37 +35,16 @@ function AnimatedRoutes({ onOpenResume }) {
 }
 
 function AppContent() {
-  const [isResumeOpen, setIsResumeOpen] = useState(false);
-  const navigate = useNavigate();
-
-  const handleOpenResume = () => {
-    setIsResumeOpen(true);
-  };
-
-  const handleCloseResume = () => {
-    setIsResumeOpen(false);
-  };
-
-  const handleOpenContactFromResume = () => {
-    setIsResumeOpen(false);
-    navigate('/contact');
-  };
-
   return (
     <div className="min-h-screen flex flex-col bg-[#090A10] text-[#F1F5F9] font-sans selection:bg-indigo-500/30 selection:text-white relative">
+      <StudioParticles />
+      <div className="film-grain" aria-hidden="true" />
       <ScrollToTop />
-      <Navbar onOpenResume={handleOpenResume} />
+      <Navbar />
       <main className="flex-1">
-        <AnimatedRoutes onOpenResume={handleOpenResume} />
+        <AnimatedRoutes />
       </main>
-      <Footer onOpenResume={handleOpenResume} />
-
-      {/* Global Interactive Resume Modal */}
-      <ResumeModal
-        isOpen={isResumeOpen}
-        onClose={handleCloseResume}
-        onOpenContact={handleOpenContactFromResume}
-      />
+      <Footer />
     </div>
   );
 }

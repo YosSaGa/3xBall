@@ -278,6 +278,10 @@ export function CoverFlowCarousel({
               filter = "brightness(0.55) blur(1px)";
             }
 
+            // Virtualize: only render visible and adjacent buffer cards to maintain 60-120fps
+            const isVisible = offset <= 3 || offset >= total - 3;
+            if (!isVisible) return null;
+
             return (
               <div
                 key={idx}
@@ -288,7 +292,7 @@ export function CoverFlowCarousel({
                     onCtaClick(item);
                   }
                 }}
-                title={isCenter ? "คลิกเพื่อดูสเปกเชิงลึก (Inspect Specs)" : "คลิกเพื่อเลื่อนมาตรงกลาง"}
+                title={isCenter ? "คลิกเพื่อดูรูปขนาดเต็ม" : "คลิกเพื่อเลื่อนมาตรงกลาง"}
                 style={{
                   position: "absolute",
                   width: `${cardWidth}px`,
@@ -394,44 +398,16 @@ export function CoverFlowCarousel({
                     {item.titleLine2 && (
                       <span
                         style={{
-                          fontSize: isMobile ? "0.95rem" : "1.1rem",
-                          fontWeight: 700,
-                          textTransform: "uppercase",
-                          letterSpacing: "0.06em",
-                          color: "#f3f0ea",
+                          fontSize: isMobile ? "0.85rem" : "0.95rem",
+                          fontWeight: 600,
+                          color: "#e2e8f0",
                           lineHeight: 1.2,
-                          textShadow: "0 3px 10px rgba(0,0,0,0.9)",
+                          textShadow: "0 2px 8px rgba(0,0,0,0.9)",
+                          marginBottom: "6px",
                         }}
                       >
                         {item.titleLine2}
                       </span>
-                    )}
-
-                    <div
-                      style={{
-                        width: isMobile ? "28px" : "34px",
-                        height: "2px",
-                        backgroundColor: "#c5a880",
-                        borderRadius: "2px",
-                        margin: "4px auto 3px",
-                        boxShadow: "0 0 8px rgba(197,168,128,0.7)",
-                      }}
-                    />
-
-                    {item.desc && (
-                      <p
-                        style={{
-                          fontSize: isMobile ? "0.74rem" : "0.82rem",
-                          fontStyle: "italic",
-                          color: "rgba(255,255,255,0.9)",
-                          maxWidth: isMobile ? "230px" : "280px",
-                          margin: isMobile ? "0 0 8px" : "0 0 10px",
-                          lineHeight: 1.25,
-                          textShadow: "0 2px 8px rgba(0,0,0,0.9)",
-                        }}
-                      >
-                        {item.desc}
-                      </p>
                     )}
 
                     <a
@@ -448,19 +424,19 @@ export function CoverFlowCarousel({
                         gap: "5px",
                         padding: isMobile ? "6px 14px" : "7px 18px",
                         borderRadius: "9999px",
-                        background: "linear-gradient(135deg, #c5a880 0%, #a48256 100%)",
-                        color: "#110d0c",
+                        background: "linear-gradient(135deg, #6366f1 0%, #4f46e5 100%)",
+                        color: "#ffffff",
                         fontSize: isMobile ? "0.68rem" : "0.72rem",
-                        fontWeight: 800,
-                        letterSpacing: "0.12em",
+                        fontWeight: 700,
+                        letterSpacing: "0.08em",
                         textTransform: "uppercase",
                         textDecoration: "none",
-                        boxShadow: "0 4px 14px rgba(0,0,0,0.4), 0 0 15px rgba(197,168,128,0.3)",
+                        boxShadow: "0 4px 14px rgba(0,0,0,0.4), 0 0 15px rgba(99,102,241,0.4)",
                         cursor: "pointer",
                         transition: "transform 200ms ease, box-shadow 200ms ease",
                       }}
                     >
-                      <span>{item.ctaText || "View Menu"}</span>
+                      <span>{item.ctaText || "ดูรูปขนาดเต็ม"}</span>
                       <ArrowRightIcon />
                     </a>
                   </div>
